@@ -9,8 +9,7 @@ class HomePageView(TemplateView):
         context.update({
             # add key-value pairs here
         })
-        
         return context
 
-homepage = HomePageView.as_view()
 
+homepage = HomePageView.as_view()
