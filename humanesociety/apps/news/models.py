@@ -10,5 +10,5 @@ class Entry(models.Model):
     body = models.TextField()
 
     class Meta:
-        verbose_name_plural = 'entires'
+        verbose_name_plural = 'entries'
         ordering = ['-date_created', ]
