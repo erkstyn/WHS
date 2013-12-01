@@ -49,16 +49,6 @@ WSGI_APPLICATION = 'www.wsgi.application'
 TEMPLATE_DIRS = (
     _('templates'),
 )
-
-INSTALLED_APPS = (
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.admin',
-)
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -82,3 +72,16 @@ LOGGING = {
         },
     }
 }
+
+# ========================================
+
+INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'django.contrib.flatpages',
+    'django.contrib.admin',
+)
