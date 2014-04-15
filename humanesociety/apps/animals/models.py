@@ -10,6 +10,12 @@ class Species(models.Model):
     """
     name = models.CharField(max_length=255)
 
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = 'species'
+
 
 class Breed(models.Model):
     """Breeds are a specialization of Species --
@@ -19,6 +25,11 @@ class Breed(models.Model):
     species = models.ForeignKey(Species)
     name = models.CharField(max_length=255)
 
+    def __unicode__(self):
+        return '%s | %s' % (self.species.name, self.name)
+
+    class Meta:
+        ordering = ['-species__name', 'name']
 
 class Animal(models.Model):
     SEXES = (
@@ -34,16 +45,23 @@ class Animal(models.Model):
 
     bio = models.TextField()
 
+    def __unicode__(self):
+        return self.name
 
-class AdoptionCandidate(models.Model):
+    class Meta:
+        abstract = True
+
+
+class AdoptionCandidate(Animal):
     ADOPTION_STATES = (
         (0, 'Available'),
         (1, 'Adopted'),
         (2, 'Unpublished'),
     )
 
-    pet = models.OneToOneField(Animal)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, help_text="""
+        The URL that this animal will be viewable at. No spaces. Ex.: rex_the_dog
+    """.strip())
     available_on = models.DateTimeField()
     published = models.DateTimeField(auto_now_add=True)
     status = models.IntegerField(choices=ADOPTION_STATES)

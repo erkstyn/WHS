@@ -23,8 +23,8 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'animals', ['Breed'])
 
-        # Adding model 'Animal'
-        db.create_table(u'animals_animal', (
+        # Adding model 'AdoptionCandidate'
+        db.create_table(u'animals_adoptioncandidate', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('breed', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['animals.Breed'])),
@@ -33,13 +33,6 @@ class Migration(SchemaMigration):
             ('neutered', self.gf('django.db.models.fields.NullBooleanField')(null=True, blank=True)),
             ('has_shots', self.gf('django.db.models.fields.NullBooleanField')(null=True, blank=True)),
             ('bio', self.gf('django.db.models.fields.TextField')()),
-        ))
-        db.send_create_signal(u'animals', ['Animal'])
-
-        # Adding model 'AdoptionCandidate'
-        db.create_table(u'animals_adoptioncandidate', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('pet', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['animals.Animal'], unique=True)),
             ('slug', self.gf('django.db.models.fields.SlugField')(unique=True, max_length=50)),
             ('available_on', self.gf('django.db.models.fields.DateTimeField')()),
             ('published', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
@@ -57,9 +50,6 @@ class Migration(SchemaMigration):
         # Deleting model 'Breed'
         db.delete_table(u'animals_breed')
 
-        # Deleting model 'Animal'
-        db.delete_table(u'animals_animal')
-
         # Deleting model 'AdoptionCandidate'
         db.delete_table(u'animals_adoptioncandidate')
 
@@ -67,28 +57,23 @@ class Migration(SchemaMigration):
     models = {
         u'animals.adoptioncandidate': {
             'Meta': {'ordering': "['-published']", 'object_name': 'AdoptionCandidate'},
-            'available_on': ('django.db.models.fields.DateTimeField', [], {}),
-            'good_with_kids': ('django.db.models.fields.NullBooleanField', [], {'null': 'True', 'blank': 'True'}),
-            'good_with_pets': ('django.db.models.fields.NullBooleanField', [], {'null': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'pet': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['animals.Animal']", 'unique': 'True'}),
-            'published': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50'}),
-            'status': ('django.db.models.fields.IntegerField', [], {})
-        },
-        u'animals.animal': {
-            'Meta': {'object_name': 'Animal'},
             'age': ('django.db.models.fields.IntegerField', [], {}),
+            'available_on': ('django.db.models.fields.DateTimeField', [], {}),
             'bio': ('django.db.models.fields.TextField', [], {}),
             'breed': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['animals.Breed']"}),
+            'good_with_kids': ('django.db.models.fields.NullBooleanField', [], {'null': 'True', 'blank': 'True'}),
+            'good_with_pets': ('django.db.models.fields.NullBooleanField', [], {'null': 'True', 'blank': 'True'}),
             'has_shots': ('django.db.models.fields.NullBooleanField', [], {'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'neutered': ('django.db.models.fields.NullBooleanField', [], {'null': 'True', 'blank': 'True'}),
-            'sex': ('django.db.models.fields.IntegerField', [], {})
+            'published': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'sex': ('django.db.models.fields.IntegerField', [], {}),
+            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50'}),
+            'status': ('django.db.models.fields.IntegerField', [], {})
         },
         u'animals.breed': {
-            'Meta': {'object_name': 'Breed'},
+            'Meta': {'ordering': "['-species__name', 'name']", 'object_name': 'Breed'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'species': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['animals.Species']"})
