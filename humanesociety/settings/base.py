@@ -47,7 +47,7 @@ ROOT_URLCONF = 'www.urls'
 WSGI_APPLICATION = 'www.wsgi.application'
 
 TEMPLATE_DIRS = (
-    _('templates'),
+    _('humanesociety/templates'),
 )
 LOGGING = {
     'version': 1,
