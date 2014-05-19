@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load markup %}
+
+{% block content %}
+<div class="entry entry-{{ entry.get_status_display|slugify }}">
+    <h2>
+        <a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a>
+        {{ entry.date_created|date:"D dS M Y" }}
+    </h2>
+
+    <div>
+        {{ entry.body|markdown }}
+    </div>
+</div>
+{% endblock %}

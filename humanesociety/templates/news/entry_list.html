@@ -1,14 +1,15 @@
 {% extends "base.html" %}
+{% load bootstrap3 %}
 
 {% block title %}Wellington Humane Society | Home{% endblock %}
 {% block body_class %}hero list{% endblock %}
 
 {% block content %}
-    <h1>PETS</h1>    
-
     {% for entry in page.object_list %}
         {% include "news/includes/entry_list_item.html" %}
     {% empty %}
         No posts.
     {% endfor %}
+
+    {% bootstrap_pagination page %}
 {% endblock %}

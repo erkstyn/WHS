@@ -1,0 +1,13 @@
+{% load markup %}
+<div class="entry entry-{{ entry.get_status_display|slugify }}">
+    <h2>
+        <a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a>
+        {{ entry.date_created|date:"D M dS, Y" }}
+    </h2>
+
+    <div>
+        {{ entry.body|markdown|truncatewords_html:80 }}
+    </div>
+
+    <a href="{{ entry.get_absolute_url }}">See more&hellip;</a>
+</div>

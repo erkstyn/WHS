@@ -19,6 +19,15 @@ class Entry(models.Model):
     tease = models.TextField(null=True, blank=True)
     body = models.TextField()
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('entry_detail', [
+            self.date_created.year,
+            self.date_created.month,
+            self.date_created.day,
+            self.slug,
+        ])
+
     class Meta:
         verbose_name_plural = 'entries'
         ordering = ['-date_created', ]

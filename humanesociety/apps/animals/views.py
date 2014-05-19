@@ -1,6 +1,7 @@
 from .models import AdoptionCandidate, Species, Breed
 from django.shortcuts import render, get_object_or_404
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, InvalidPage
+from django.http import Http404
 
 def adoption_detail(request, slug):
     adoption_states = range(0, 3 if request.user.is_staff else 2)
@@ -28,8 +29,13 @@ def adoption_list(request, species=None, breed=None):
             breed__species__slug=species)
 
     paginator = Paginator(candidate_list, 10)
-    current_page = int(request.GET.get('page') or 1)
-   
+
+    try:
+        current_page = request.GET.get('page') or 1
+        page = paginator.page(current_page)
+    except InvalidPage:
+        raise Http404()
+
     all_breeds = Breed.objects.filter(
         adoptioncandidate__status__in=adoption_states
     )
@@ -37,8 +43,6 @@ def adoption_list(request, species=None, breed=None):
     all_species = Species.objects.filter(
         breed__adoptioncandidate__status__in=adoption_states
     )
-
-    AdoptionCandidate.objects.all()
 
     return render(request, 'animals/adoption_list.html', {
         'paginator': paginator,
