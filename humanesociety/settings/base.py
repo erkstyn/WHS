@@ -87,4 +87,5 @@ INSTALLED_APPS = (
     'apps.animals',
     'apps.news',
     'south',
+    'bootstrap3',
 )
