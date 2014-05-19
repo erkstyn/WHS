@@ -1,6 +1,6 @@
 from .models import AdoptionCandidate, Species, Breed
 from django.shortcuts import render, get_object_or_404
-from django.core.pagination import Paginator
+from django.core.paginator import Paginator
 
 def adoption_detail(request, slug):
     adoption_states = range(0, 3 if request.user.is_staff else 2)
@@ -15,7 +15,7 @@ def adoption_detail(request, slug):
 
 
 def adoption_list(request, species=None, breed=None):
-    adoption_states = range(0, 3 if request.user.is_staff else 2)
+    adoption_states = [0, 2] if request.user.is_staff else [0]
     candidate_list = AdoptionCandidate.objects.filter(
         status__in=adoption_states)
 
@@ -27,7 +27,7 @@ def adoption_list(request, species=None, breed=None):
         candidate_list = candidate_list.filter(
             breed__species__slug=species)
 
-    paginatior = Paginator(candidate_list, 10)
+    paginator = Paginator(candidate_list, 10)
     current_page = int(request.GET.get('page') or 1)
    
     all_breeds = Breed.objects.filter(
@@ -40,12 +40,12 @@ def adoption_list(request, species=None, breed=None):
 
     AdoptionCandidate.objects.all()
 
-    return render(request, 'animals/adoption_detail.html', {
-        'paginatior': paginator,
+    return render(request, 'animals/adoption_list.html', {
+        'paginator': paginator,
         'current_page': current_page,
         'page': paginator.page(current_page),
         'current_breed': breed,
         'current_species': species,
-        'all_breeds': breeds,
-        'all_species': species,
+        'all_breeds': all_breeds,
+        'all_species': all_species,
     })

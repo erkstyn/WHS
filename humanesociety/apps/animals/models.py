@@ -73,5 +73,9 @@ class AdoptionCandidate(Animal):
 
     objects = AdoptionCandidateManager()
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('adoption_detail', [self.slug]) 
+
     class Meta:
         ordering = ['-published', ]

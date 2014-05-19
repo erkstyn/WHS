@@ -84,6 +84,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.flatpages',
     'django.contrib.admin',
+    'django.contrib.markup',
     'apps.animals',
     'apps.news',
     'south',

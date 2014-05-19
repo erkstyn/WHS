@@ -1,0 +1,8 @@
+{% load markup %}
+<div class="info-group">
+    <h3><a href="{{ candidate.get_absolute_url }}">{{ candidate.name }}</a> <span class="{{ candidate.sex|yesno:"female,male" }}"></span> <span class="{{ candidate.breed.species.slug }}"></span></h3>
+    <div>
+        {{ candidate.bio|markdown|truncatewords_html:40 }}
+    </div>
+    <a href="{{ candidate.get_absolute_url }}">See more&hellip;</a> 
+</div>

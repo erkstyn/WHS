@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{% load markup %}
+{% block content %}
+    <h3><a href="{{ candidate.get_absolute_url }}">{{ candidate.name }}</a> <span class="{{ candidate.sex|yesno:"female,male" }}"></span> <span class="{{ candidate.breed.species.slug }}"></span></h3>
+    <div>
+        {{ candidate.bio|markdown }}
+    </div>
+{% endblock %}

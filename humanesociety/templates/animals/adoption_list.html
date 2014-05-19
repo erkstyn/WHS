@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{% block content %}
+    {% for candidate in page.object_list %}
+        {% include "animals/includes/candidate_list_item.html" %}
+    {% empty %}
+        No pets up for adoption at this time.
+    {% endfor %}  
+
+    {% bootstrap_pagination page %}
+{% endblock %}
