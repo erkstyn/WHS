@@ -9,6 +9,7 @@ class Species(models.Model):
     "Marmots", etc.
     """
     name = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True)
 
     def __unicode__(self):
         return self.name
@@ -24,12 +25,14 @@ class Breed(models.Model):
     """
     species = models.ForeignKey(Species)
     name = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True)
 
     def __unicode__(self):
         return '%s | %s' % (self.species.name, self.name)
 
     class Meta:
         ordering = ['-species__name', 'name']
+
 
 class Animal(models.Model):
     SEXES = (

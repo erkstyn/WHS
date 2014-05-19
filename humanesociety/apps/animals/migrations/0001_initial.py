@@ -4,7 +4,6 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
-
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
@@ -41,7 +40,6 @@ class Migration(SchemaMigration):
             ('good_with_kids', self.gf('django.db.models.fields.NullBooleanField')(null=True, blank=True)),
         ))
         db.send_create_signal(u'animals', ['AdoptionCandidate'])
-
 
     def backwards(self, orm):
         # Deleting model 'Species'
