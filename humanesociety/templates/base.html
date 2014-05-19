@@ -1,19 +1,7 @@
-<!DOCTYPE HTML>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>{% block title %}Wellington Humane Society{% endblock %}</title>
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/main.css" />
-    {% block extra_head %}
+{% extends "bootstrap3/bootstrap3.html" %}
 
-    {% endblock %}
-</head>
-<body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
-    <div id="wrap">
-        {% block content %}
+{% block bootstrap3_title %}{% block title %}{% endblock %}{% endblock %}
 
-        {% endblock %}
-    </div>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/bundle.js"></script>	
-</body>
-</html>
+{% block bootstrap3_extra_head %}{% block extra_head %}{% endblock %}{% endblock %}
+
+{% block bootstrap3_content %}{% block content %}{% endblock %}{% endblock %}
