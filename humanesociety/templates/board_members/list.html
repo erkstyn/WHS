@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load markup %}
+
+{% block content %}
+
+<ul>
+{% for member in staff %}
+    <li>
+        <img src="{{ member.photo }}" />
+        <h2>{{ member.name }}</h2>
+        <h3>{{ member.title }}</h3>
+        <div class="bio">
+            {{ member.bio|markdown }}
+
+            <div class="meta">
+                <small>
+                    <a href="tel://+1{{ member.phone }}">{{ member.phone }}</a> &dot;
+                    <a href="mailto:{{ member.email }}">{{ member.email }}</a>
+                </small>
+            </div>
+        </div>
+    </li>
+{% empty %}
+    <li class="empty">
+        No board members.
+    </li>
+{% endfor %} 
+</ul>
+
+{% endblock %}

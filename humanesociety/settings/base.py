@@ -85,6 +85,7 @@ INSTALLED_APPS = (
     'django.contrib.flatpages',
     'django.contrib.admin',
     'django.contrib.markup',
+    'apps.board_members',
     'apps.animals',
     'apps.news',
     'south',

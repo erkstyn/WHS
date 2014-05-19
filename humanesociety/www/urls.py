@@ -6,6 +6,7 @@ admin.autodiscover()
 urlpatterns = patterns(
     'apps.news.views',
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^staff/', include('apps.board_members.urls')),
     url(r'^pets/', include('apps.animals.urls')),
     url(r'^news/', include('apps.news.urls')),
     url(r'^$', 'entry_list', {'template_name': 'homepage.html'}, name='homepage'),
