@@ -23,10 +23,12 @@ def adoption_list(request, species=None, breed=None):
     if breed is not None:
         candidate_list = candidate_list.filter(
             breed__slug=breed)
+        breed = get_object_or_404(Breed, slug=breed)
 
     if species is not None:
         candidate_list = candidate_list.filter(
             breed__species__slug=species)
+        species = get_object_or_404(Species, slug=species)
 
     paginator = Paginator(candidate_list, 10)
 
@@ -37,12 +39,12 @@ def adoption_list(request, species=None, breed=None):
         raise Http404()
 
     all_breeds = Breed.objects.filter(
-        adoptioncandidate__status__in=adoption_states
-    )
+        adoptioncandidate__breed__species=species,
+    ).distinct() if species is not None else []
 
     all_species = Species.objects.filter(
         breed__adoptioncandidate__status__in=adoption_states
-    )
+    ).distinct()
 
     return render(request, 'animals/adoption_list.html', {
         'paginator': paginator,

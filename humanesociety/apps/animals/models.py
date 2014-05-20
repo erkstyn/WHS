@@ -45,6 +45,9 @@ class Animal(models.Model):
     age = models.IntegerField()
     neutered = models.NullBooleanField()
     has_shots = models.NullBooleanField()
+    weight = models.FloatField(help_text="""
+        Weight of the animal, in pounds.
+    """, null=True, blank=True)
 
     bio = models.TextField()
 
@@ -62,6 +65,10 @@ class AdoptionCandidate(Animal):
         (2, 'Unpublished'),
     )
 
+    photo = models.ImageField(upload_to='animals', null=True, blank=True)
+    self_introduction = models.TextField(help_text="""
+        A self-introduction paragraph. 40 words will be displayed on the list page, the rest will be displayed on the detail.
+    """)
     slug = models.SlugField(unique=True, help_text="""
         The URL that this animal will be viewable at. No spaces. Ex.: rex_the_dog
     """.strip())
@@ -76,6 +83,9 @@ class AdoptionCandidate(Animal):
     @models.permalink
     def get_absolute_url(self):
         return ('adoption_detail', [self.slug]) 
+
+    def is_available(self):
+        return self.status == 0
 
     class Meta:
         ordering = ['-published', ]

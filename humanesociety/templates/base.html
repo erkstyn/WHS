@@ -1,7 +1,56 @@
-{% extends "bootstrap3/bootstrap3.html" %}
+<!DOCTYPE html>
+{% load bootstrap3 %}
+<html{% if request.LANGUAGE_CODE %} lang="{{ request.LANGUAGE_CODE }}"{% endif %}>
 
-{% block bootstrap3_title %}{% block title %}{% endblock %}{% endblock %}
+<head>
+    <meta charset="utf-8">
+    <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge" /><![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    <link href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css" media="screen" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/main.css" media="screen" rel="stylesheet">
 
-{% block bootstrap3_extra_head %}{% block extra_head %}{% endblock %}{% endblock %}
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    {% block extra_head %}{% endblock %}
+</head>
 
-{% block bootstrap3_content %}{% block content %}{% endblock %}{% endblock %}
+<body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
+    <div class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Wellington Humane Society</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li {% if request.path|slice:":6" == "/pets/" %}class="active"{% endif %}><a href="/pets/">Pets</a></li>
+                    <li {% if request.path|slice:":6" == "/news/" %}class="active"{% endif %}><a href="/news/">News</a></li>
+                    <li {% if request.path|slice:":7" == "/staff/" %}class="active"{% endif %}><a href="/staff/">Staff</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% block jumbotron %}
+
+    {% endblock %}
+
+    {% block framing %}
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+    {% endblock framing %}
+    {% bootstrap_javascript jquery=True %}
+    {% block extra_script %}{% endblock %}
+</body>
+</html>

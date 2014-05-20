@@ -23,7 +23,14 @@ class AdoptionCandidateAdmin(admin.ModelAdmin):
         'slug': ('name', ),
     }
 
+    search_fields = (
+        'name',
+        'breed__name',
+        'breed__species__name',
+    )
+
     list_display = (
+        'name',
         'breed',
         'species',
         'good_with_pets',
@@ -32,9 +39,10 @@ class AdoptionCandidateAdmin(admin.ModelAdmin):
     )
 
     list_filter = (
+        'status',
+        'breed__species',
         'good_with_pets',
         'good_with_kids',
-        'status',
     )
 
 

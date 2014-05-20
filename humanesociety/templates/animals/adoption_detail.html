@@ -1,10 +1,113 @@
 {% extends "base.html" %}
 {% load bootstrap3 %}
-
 {% load markup %}
-{% block content %}
-    <h3><a href="{{ candidate.get_absolute_url }}">{{ candidate.name }}</a> <span class="{{ candidate.sex|yesno:"female,male" }}"></span> <span class="{{ candidate.breed.species.slug }}"></span></h3>
-    <div>
-        {{ candidate.bio|markdown }}
+
+{% block jumbotron %}
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h1>{{ candidate.name }}</h1>
+                <h2><small>{{ candidate.age }}-year old {{ candidate.get_sex_display }} {{ candidate.breed.name }}</small></h2>
+                <div class="self-introduction pull-left">
+                    {{ candidate.self_introduction }}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <img src="{% if candidate.photo %}{{ candidate.photo.url }}{% else %}{{ STATIC_URL }}images/{{ candidate.breed.species.slug }}.png{% endif %}" data-src="holder.js/300x200" alt="&hellip;" style="width: 100%;">
+            </div>
+        </div>
     </div>
+</div>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-3">
+            <div>
+                <h4>{{ candidate.name }}</h4>
+
+                <table class="table">
+                    <tr>
+                        <th>Age</th>
+                        <td>{{ candidate.age }} Years</td>
+                    </tr>
+                    <tr>
+                        <th>Sex</th>
+                        <td>{{ candidate.sex|yesno:"Male,Female" }}</td>
+                    </tr>
+                    {% if candidate.weight %}
+                    <tr>
+                        <th>Weight</th>
+                        <td>{{ candidate.weight|floatformat:"-1" }} lbs.</td>
+                    </tr>
+                    {% endif %}
+                    <tr>
+                        <th>Breed</th>
+                        <td>{{ candidate.breed.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Species</th>
+                        <td>{{ candidate.breed.species.name }}</td>
+                    </tr>
+                    <tr>
+                        {% if candidate.is_available %}
+                            <th>Available on</th>
+                            <td>
+                                {{ candidate.available_on|date:"D dS M Y" }}
+                            </td>
+                        {% else %}
+                        <td colspan="2">
+                            <span class="label {% if candidate.status == 1 %}label-success{% elif candidate.status == 2 %}label-warning{% endif %}">{{ candidate.get_status_display }}</span> 
+                        </td>
+                        {% endif %}
+                    </tr>
+
+                    {% if user.is_staff %}
+                        <tr>
+                            <th>
+                                <a href="#" class="staff-only-warning" data-toggle="tooltip" title="Only staff members can see this information.">
+                                Listing Created
+                                </a>
+                            </th>
+                            <td>
+                                {{ candidate.published|date:"D dS M Y" }}
+                            </td>
+                        </tr>
+                    {% endif %}
+    
+                    {% if candidate.good_with_pets %}
+                    <tr>
+                        <td colspan="2">May be good with other pets</td>
+                    </tr>
+                    {% endif %}
+                    {% if candidate.good_with_kids %}
+                    <tr>
+                        <td colspan="2">May be good with kids</td>
+                    </tr>
+                    {% endif %}
+                    <tr>
+                        <th>Has shots?</th>
+                        <td>{{ candidate.has_shots|yesno:"Yes,No" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Neutered?</th>
+                        <td>{{ candidate.has_shots|yesno:"Yes,No" }}</td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+        <div class="col-md-8">
+            {{ candidate.bio|markdown }}
+        </div>
+    </div>
+    
+{% endblock %}
+
+{% block extra_script %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $('.staff-only-warning').tooltip()        
+    </script>
 {% endblock %}

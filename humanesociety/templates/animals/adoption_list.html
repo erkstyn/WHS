@@ -2,8 +2,52 @@
 {% load bootstrap3 %}
 
 {% block content %}
+    <div class="well">
+        <ul class="nav nav-pills">
+            <li class="dropdown {% if not current_species %}active{% endif %}">
+                <a id="species-drop" data-toggle="dropdown" href="#">{{ current_species.name|default:"Filter by species" }} <span class="caret"></span></a> 
+
+                <ul id="menu1" class="dropdown-menu" role="menu" aria-labelledby="species-drop">
+                    {% for species in all_species %}
+                      <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url "adoption_list_species" species.slug %}">{{ species.name }}</a></li>
+                    {% endfor %}
+
+                    <li role="presentation" class="divider"></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url "adoption_list" %}">Clear Species Filter</a></li>
+                </ul>
+            </li>
+
+            {% if current_species %}
+                <li class="dropdown {% if not current_breed %}active{% endif %}">
+                    <a id="breed-drop" data-toggle="dropdown" href="#">{{ current_breed.name|default:"Filter by breed" }} <span class="caret"></span></a> 
+
+                    <ul id="menu1" class="dropdown-menu" role="menu" aria-labelledby="breed-drop">
+                        {% for breed in all_breeds %}
+                          <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url "adoption_list_species_breed" current_species.slug breed.slug %}">{{ breed.name }}</a></li>
+                        {% endfor %}
+
+                        <li role="presentation" class="divider"></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url "adoption_list_species" current_species.slug %}">Clear Species Filter</a></li>
+                    </ul>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+
     {% for candidate in page.object_list %}
-        {% include "animals/includes/candidate_list_item.html" %}
+        {% cycle 'one' 'two' 'three' as counter silent %}
+        {% if forloop.first %}
+            <div class="row">
+        {% endif %}
+        <div class="col-sm-6 col-md-4">
+            {% include "animals/includes/candidate_list_item.html" %}
+        </div>
+        {% if forloop.last %}
+            </div>
+        {% elif counter == "three" %}
+            </div>
+            <div class="row">
+        {% endif %}
     {% empty %}
         No pets up for adoption at this time.
     {% endfor %}  

@@ -1,8 +1,12 @@
 {% load markup %}
-<div class="info-group">
-    <h3><a href="{{ candidate.get_absolute_url }}">{{ candidate.name }}</a> <span class="{{ candidate.sex|yesno:"female,male" }}"></span> <span class="{{ candidate.breed.species.slug }}"></span></h3>
-    <div>
-        {{ candidate.bio|markdown|truncatewords_html:40 }}
+<div class="animal thumbnail">
+    <img src="{% if candidate.photo %}{{ candidate.photo.url }}{% else %}{{ STATIC_URL }}images/{{ candidate.breed.species.slug }}.png{% endif %}" data-src="holder.js/300x200" alt="&hellip;">
+    <div class="caption">
+        <h3><a href="{{ candidate.get_absolute_url }}">{{ candidate.name }}</a> <span class="{{ candidate.sex|yesno:"female,male" }}"></span> <span class="{{ candidate.breed.species.slug }}"></span></h3>
+        <h4><small>{{ candidate.age }}-year old {{ candidate.get_sex_display }} {{ candidate.breed.name }}</small></h4>
+        <div class="tease-container">
+            {{ candidate.self_introduction|linebreaks|truncatewords:40 }}
+        </div>
+        <p><a href="{{ candidate.get_absolute_url }}" class="">Find out more about {{ candidate.name }}&hellip;</a></p>
     </div>
-    <a href="{{ candidate.get_absolute_url }}">See more&hellip;</a> 
 </div>
