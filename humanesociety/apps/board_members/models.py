@@ -8,11 +8,15 @@ class BoardMember(models.Model):
     """
     name = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
-    photo = models.URLField(max_length=255, null=True, blank=True)
+    photo = models.ImageField(upload_to='staff', max_length=255, null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
-    phone = models.CharField(max_length=255)
+    phone = models.CharField(max_length=255, help_text="""
+        e.g, (222) 222-1010
+    """)
     bio = models.TextField()
     order = models.IntegerField()
 
     class Meta:
         ordering = ['order', ]
+        verbose_name = 'Staff Member'
+        verbose_name_plural = 'Staff Members'

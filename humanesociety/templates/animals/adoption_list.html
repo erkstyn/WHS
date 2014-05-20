@@ -2,10 +2,11 @@
 {% load bootstrap3 %}
 
 {% block content %}
-    <div class="well">
+    <div class="navbar navbar-default">
+        <div class="container-fluid">
         <ul class="nav nav-pills">
             <li class="dropdown {% if not current_species %}active{% endif %}">
-                <a id="species-drop" data-toggle="dropdown" href="#">{{ current_species.name|default:"Filter by species" }} <span class="caret"></span></a> 
+                <a id="species-drop" class="navbar-btn" data-toggle="dropdown" href="#">{{ current_species.name|default:"Filter by species" }} <span class="caret"></span></a> 
 
                 <ul id="menu1" class="dropdown-menu" role="menu" aria-labelledby="species-drop">
                     {% for species in all_species %}
@@ -19,7 +20,7 @@
 
             {% if current_species %}
                 <li class="dropdown {% if not current_breed %}active{% endif %}">
-                    <a id="breed-drop" data-toggle="dropdown" href="#">{{ current_breed.name|default:"Filter by breed" }} <span class="caret"></span></a> 
+                    <a id="breed-drop" class="navbar-btn" data-toggle="dropdown" href="#">{{ current_breed.name|default:"Filter by breed" }} <span class="caret"></span></a> 
 
                     <ul id="menu1" class="dropdown-menu" role="menu" aria-labelledby="breed-drop">
                         {% for breed in all_breeds %}
@@ -32,6 +33,7 @@
                 </li>
             {% endif %}
         </ul>
+        </div>
     </div>
 
     {% for candidate in page.object_list %}
@@ -39,7 +41,7 @@
         {% if forloop.first %}
             <div class="row">
         {% endif %}
-        <div class="col-sm-6 col-md-4">
+        <div class="col-sm-5 col-md-4">
             {% include "animals/includes/candidate_list_item.html" %}
         </div>
         {% if forloop.last %}

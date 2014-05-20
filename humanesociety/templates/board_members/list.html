@@ -4,27 +4,51 @@
 {% block content %}
 
 <ul>
-{% for member in staff %}
-    <li>
-        <img src="{{ member.photo }}" />
-        <h2>{{ member.name }}</h2>
-        <h3>{{ member.title }}</h3>
-        <div class="bio">
-            {{ member.bio|markdown }}
 
-            <div class="meta">
-                <small>
-                    <a href="tel://+1{{ member.phone }}">{{ member.phone }}</a> &dot;
-                    <a href="mailto:{{ member.email }}">{{ member.email }}</a>
-                </small>
+    {% for member in staff %}
+        {% cycle 'one' 'two' 'three' as counter silent %}
+        {% if forloop.first %}
+            <div class="row">
+        {% endif %}
+
+        <div class="col-sm-5 col-md-4">
+            <div class="staff thumbnail">
+                {% if member.photo %}<img src="{{ member.photo.url }}" />{% endif %}
+                <h2>{{ member.name }} <small>{{ member.title }}</small></h2>
+                <hr>
+                <div class="bio">
+                    {{ member.bio|markdown }}
+                    <table class="table">
+                        <tr>
+                            <th>Phone number</th>
+                            <td>
+                                <a class="" href="tel://+1{{ member.phone }}">{{ member.phone }}</a>
+                            </td>
+                        </tr>
+                        {% if member.email %}
+                        <tr>
+                            <th>Email</th>
+                            <td>
+                                <a class="" href="mailto:{{ member.email }}">{{ member.email }}</a>
+                            </td>
+                        </tr>
+                        {% endif %}
+                    </table>
+                </div>
             </div>
+
+
+
         </div>
-    </li>
-{% empty %}
-    <li class="empty">
-        No board members.
-    </li>
-{% endfor %} 
+        {% if forloop.last %}
+            </div>
+        {% elif counter == "three" %}
+            </div>
+            <div class="row">
+        {% endif %}
+    {% empty %}
+        No staff members listed.
+    {% endfor %}
 </ul>
 
 {% endblock %}

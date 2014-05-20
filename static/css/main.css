@@ -2,6 +2,7 @@
     min-height: 150px;
     max-height: 200px;
     position: relative;
+    overflow: hidden;
 }
 
 .tease-container:after {
