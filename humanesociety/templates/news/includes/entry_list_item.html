@@ -1,13 +1,16 @@
 {% load markup %}
-<div class="entry entry-{{ entry.get_status_display|slugify }}">
-    <h4>
+<li class="media entry-item entry-{{ entry.get_status_display|slugify }}">
+
+    <div class="media-body">
+    <h4 class="media-heading">
         <a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a>
         <small>{{ entry.date_created|date:"D M dS, Y" }}</small>
-    </h4>
+    </h3>
 
-    <div>
+    <div class="tease">
         {{ entry.body|markdown|truncatewords_html:80 }}
     </div>
 
     <a href="{{ entry.get_absolute_url }}">See more&hellip;</a>
-</div>
+    </div>
+</li>

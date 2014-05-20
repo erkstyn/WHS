@@ -16,7 +16,7 @@ def entry_detail(request, year, month, day, slug):
         'entry': entry
     })
 
-def entry_list(request, template_name='news/entry_list.html'):
+def entry_list(request, template_name='news/entry_list.html', get_context=dict):
     states = [0, 1] if request.user.is_staff else [1]
     entry_list = Entry.objects.filter(
         status__in=states)
@@ -29,8 +29,11 @@ def entry_list(request, template_name='news/entry_list.html'):
     except InvalidPage:
         raise Http404()
 
-    return render(request, template_name, {
+    context = get_context()
+    context.update({
         'paginator': paginator,
         'current_page': current_page,
         'page': paginator.page(current_page),
     })
+
+    return render(request, template_name, context)

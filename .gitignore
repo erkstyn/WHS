@@ -2,3 +2,5 @@ project.db
 .DS_Store
 *.pyc
 .Python
+media
+public

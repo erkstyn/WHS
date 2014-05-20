@@ -5,11 +5,14 @@
 {% block body_class %}hero list{% endblock %}
 
 {% block content %}
+
+    <ul class="media-list">
     {% for entry in page.object_list %}
         {% include "news/includes/entry_list_item.html" %}
     {% empty %}
-        No posts.
+        <li>No posts.</li>
     {% endfor %}
+    </ul>
 
     {% bootstrap_pagination page %}
 {% endblock %}

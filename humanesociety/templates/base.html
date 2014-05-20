@@ -33,8 +33,8 @@
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li {% if request.path|slice:":6" == "/pets/" %}class="active"{% endif %}><a href="/pets/">Pets</a></li>
-                    <li {% if request.path|slice:":6" == "/news/" %}class="active"{% endif %}><a href="/news/">News</a></li>
+                    <li {% if request.path|slice:":6" == "/pets/" %}class="active"{% endif %}><a href="/pets/">Adopt a Pet</a></li>
+                    <li {% if request.path|slice:":6" == "/news/" %}class="active"{% endif %}><a href="/news/">Recent News</a></li>
                     <li {% if request.path|slice:":7" == "/staff/" %}class="active"{% endif %}><a href="/staff/">Staff</a></li>
                 </ul>
             </div>

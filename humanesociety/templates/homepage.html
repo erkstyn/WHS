@@ -4,11 +4,39 @@
 {% block body_class %}hero list{% endblock %}
 
 {% block content %}
-    <h1>PETS</h1>    
+    <div class="page-header">
+        <h2><a href="{% url "entry_list" %}">Recent News</a></h2>
+    </div>
 
+    <ul class="media-list">
     {% for entry in page.object_list %}
         {% include "news/includes/entry_list_item.html" %}
     {% empty %}
-        No posts.
+        <li>No posts.</li>
     {% endfor %}
+    </ul>
+
+    <div class="page-header">
+        <h2><a href="{% url "adoption_list" %}">Adopt a Pet</a></h2>
+    </div>
+    {% if recently_added|length %} 
+    {% for candidate in recently_added %}
+        {% cycle 'one' 'two' 'three' as counter silent %}
+        {% if forloop.first %}
+            <div class="row">
+        {% endif %}
+        <div class="col-sm-5 col-md-4">
+            {% include "animals/includes/candidate_list_item.html" %}
+        </div>
+        {% if forloop.last %}
+            </div>
+        {% elif counter == "three" %}
+            </div>
+            <div class="row">
+        {% endif %}
+    {% empty %}
+        No pets up for adoption at this time.
+    {% endfor %}  
+    {% endif %}
+
 {% endblock %}

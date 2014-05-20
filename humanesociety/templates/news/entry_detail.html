@@ -3,10 +3,12 @@
 
 {% block content %}
 <div class="entry entry-{{ entry.get_status_display|slugify }}">
-    <h2>
-        <a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a>
-        {{ entry.date_created|date:"D dS M Y" }}
-    </h2>
+    <div class="page-header">
+        <h1>
+            {{ entry.title }}
+            <small>{{ entry.date_created|date:"D dS M Y" }}</small>
+        </h1>
+    </div>
 
     <div>
         {{ entry.body|markdown }}
