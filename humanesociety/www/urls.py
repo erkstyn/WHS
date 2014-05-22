@@ -1,7 +1,6 @@
 from django.conf.urls import patterns, include, url, handler404, handler500
 from django.contrib import admin
-
-admin.autodiscover()
+from django.conf import settings
 
 def get_recent_candidates():
     from apps.animals.models import AdoptionCandidate
@@ -12,7 +11,6 @@ def get_recent_candidates():
 
 urlpatterns = patterns(
     'apps.news.views',
-    url(r'^admin/', include(admin.site.urls)),
     url(r'^staff/', include('apps.board_members.urls')),
     url(r'^pets/', include('apps.animals.urls')),
     url(r'^news/', include('apps.news.urls')),
@@ -21,6 +19,12 @@ urlpatterns = patterns(
         'get_context': get_recent_candidates,
     }, name='homepage'),
 )
+
+if settings.ADMIN_ENABLED:
+    admin.autodiscover()
+    urlpatterns = patterns('',
+        url(r'^admin/', include(admin.site.urls)),
+    ) + urlpatterns
 
 urlpatterns = patterns(
     'django.contrib.flatpages.views',

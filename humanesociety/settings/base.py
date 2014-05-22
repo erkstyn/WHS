@@ -45,6 +45,7 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'www.urls'
 WSGI_APPLICATION = 'www.wsgi.application'
+ADMIN_ENABLED = False
 
 TEMPLATE_DIRS = (
     _('humanesociety/templates'),
