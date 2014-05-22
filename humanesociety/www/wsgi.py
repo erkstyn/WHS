@@ -25,7 +25,13 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "www.settings")
 # file. This includes Django's development server, if the WSGI_APPLICATION
 # setting points here.
 from django.core.wsgi import get_wsgi_application
-application = get_wsgi_application()
+
+_application = get_wsgi_application()
+
+def application(environ, start_response):
+    os.environ['WHS_CONFIG'] = environ.get['WHS_CONFIG']
+
+    return _application(environ, start_response)
 
 # Apply WSGI middleware here.
 # from helloworld.wsgi import HelloWorldApplication
