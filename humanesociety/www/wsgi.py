@@ -29,7 +29,7 @@ from django.core.wsgi import get_wsgi_application
 _application = get_wsgi_application()
 
 def application(environ, start_response):
-    os.environ['WHS_CONFIG'] = environ.get['WHS_CONFIG']
+    os.environ['WHS_CONFIG'] = environ.get('WHS_CONFIG')
 
     return _application(environ, start_response)
 
