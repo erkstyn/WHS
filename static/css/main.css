@@ -21,3 +21,7 @@
 .entry-item .tease h3 {
     font-size: 100%;
 }
+
+footer {
+  border-top: 1px solid #ccc;
+}
