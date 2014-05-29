@@ -11,7 +11,7 @@ def get_recent_candidates():
 
 urlpatterns = patterns(
     'apps.news.views',
-    url(r'^staff/', include('apps.board_members.urls')),
+    url(r'^board/', include('apps.board_members.urls')),
     url(r'^pets/', include('apps.animals.urls')),
     url(r'^news/', include('apps.news.urls')),
     url(r'^$', 'entry_list', {

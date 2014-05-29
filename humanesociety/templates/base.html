@@ -35,7 +35,7 @@
                 <ul class="nav navbar-nav">
                     <li {% if request.path|slice:":6" == "/pets/" %}class="active"{% endif %}><a href="/pets/">Adopt a Pet</a></li>
                     <li {% if request.path|slice:":6" == "/news/" %}class="active"{% endif %}><a href="/news/">Recent News</a></li>
-                    <li {% if request.path|slice:":7" == "/staff/" %}class="active"{% endif %}><a href="/staff/">Staff</a></li>
+                    <li {% if request.path|slice:":7" == "/board/" %}class="active"{% endif %}><a href="/board/">Board Members</a></li>
                 </ul>
             </div>
         </div>
